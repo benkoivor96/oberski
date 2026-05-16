@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ── SEO ─────────────────────────────────────────────── -->
+  <title>Obertauern – Škola skijanja</title>
+  <meta name="description" content="Škola skijanja u Obertauernu – tečajevi za sve uzraste i razine. Iskusni instruktori, pristupačne cijene, fleksibilan raspored." />
+
+  <!-- ── Open Graph ───────────────────────────────────────── -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://obertauern.com.hr/" />
+  <meta property="og:title"       content="Obertauern – Škola skijanja" />
+  <meta property="og:description" content="Pridružite se našim stručnim instruktorima. Tečajevi skijanja za sve uzraste i razine u Obertauernu." />
+  <meta property="og:image"       content="https://obertauern.com.hr/wp-content/uploads/2025/01/pexels-photo-8627419.jpeg" />
+  <meta property="og:locale"      content="hr_HR" />
+  <meta name="twitter:card"       content="summary_large_image" />
+
+  <!-- ── Favicon ──────────────────────────────────────────── -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='85'>⛷️</text></svg>" />
+
+  <!-- ── Fonts ────────────────────────────────────────────── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Reset ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Mulish', sans-serif; font-size: 16px; color: #777; background: #fff; line-height: 1.65; overflow-x: hidden; }
+    img  { max-width: 100%; display: block; }
+    ul   { list-style: none; }
+    a    { text-decoration: none; color: inherit; }
+
+    /* ── Tokens ─────────────────────────────────────────────── */
+    :root {
+      --blue:     #00AEEF;
+      --dark:     #082028;
+      --heading:  #202628;
+      --muted:    #777;
+      --light-bg: #E3F2F8;
+      --max:      1200px;
+    }
+
+    /* ── Helpers ────────────────────────────────────────────── */
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 40px; }
+
+    .eyebrow { font-size: 18px; font-weight: 700; color: var(--blue); margin-bottom: 14px; }
+
+    /* ── Buttons ────────────────────────────────────────────── */
+    .btn {
+      display: inline-block; font-family: 'Mulish', sans-serif;
+      font-size: 16px; font-weight: 500; border-radius: 50px;
+      padding: 16px 34px; cursor: pointer; border: none;
+      transition: opacity .2s, transform .15s;
+    }
+    .btn-primary { background: var(--blue); color: #fff; }
+    .btn-primary:hover { opacity: .85; transform: translateY(-1px); }
+    .btn-outline-white { background: transparent; color: #fff; border: 2px solid #fff; }
+    .btn-outline-white:hover { background: rgba(255,255,255,.1); }
+
+    /* ══════════════════════════════════════════
+       SCROLL ANIMATIONS
+    ══════════════════════════════════════════ */
+    [data-anim] {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    [data-anim].is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    [data-anim="delay-1"] { transition-delay: .1s; }
+    [data-anim="delay-2"] { transition-delay: .2s; }
+    [data-anim="delay-3"] { transition-delay: .3s; }
+
+    /* ══════════════════════════════════════════
+       NAV / STICKY HEADER
+    ══════════════════════════════════════════ */
+    .site-header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      transition: background .3s, box-shadow .3s;
+    }
+    .site-header.scrolled {
+      background: rgba(8,32,40,.97);
+      box-shadow: 0 2px 20px rgba(0,0,0,.25);
+      backdrop-filter: blur(8px);
+    }
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 24px 40px; max-width: var(--max); margin: 0 auto; gap: 16px;
+    }
+    .nav__logo  { font-size: 20px; font-weight: 700; color: #fff; flex-shrink: 0; z-index: 201; }
+    .nav__links { display: flex; gap: 40px; }
+    .nav__links a { font-size: 16px; font-weight: 400; color: rgba(255,255,255,.8); transition: color .2s; }
+    .nav__links a:hover { color: #fff; }
+    .nav__cta { z-index: 201; }
+
+    /* ── Hamburger button ───────────────────── */
+    .nav__hamburger {
+      display: none;
+      flex-direction: column; justify-content: center; gap: 5px;
+      width: 36px; height: 36px; cursor: pointer;
+      background: none; border: none; padding: 4px; z-index: 201;
+    }
+    .nav__hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: #fff; border-radius: 2px;
+      transition: transform .3s, opacity .3s;
+    }
+    /* open state */
+    .nav__hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav__hamburger.is-open span:nth-child(2) { opacity: 0; }
+    .nav__hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ── Mobile drawer ──────────────────────── */
+    .mobile-menu {
+      display: none;
+      position: fixed; inset: 0; z-index: 199;
+      background: var(--dark);
+      flex-direction: column; align-items: center; justify-content: center;
+      gap: 36px;
+      opacity: 0; pointer-events: none;
+      transition: opacity .3s;
+    }
+    .mobile-menu.is-open { opacity: 1; pointer-events: all; }
+    .mobile-menu a {
+      font-size: 28px; font-weight: 700; color: #fff;
+      transition: color .2s;
+    }
+    .mobile-menu a:hover { color: var(--blue); }
+    .mobile-menu .btn { font-size: 18px; margin-top: 8px; }
+
+    /* ══════════════════════════════════════════
+       1. HERO
+    ══════════════════════════════════════════ */
+    .hero {
+      position: relative; min-height: 100svh;
+      display: flex; flex-direction: column; color: #fff;
+      background-image:
+        linear-gradient(rgba(8,32,40,.55), rgba(8,32,40,.65)),
+        url('https://obertauern.com.hr/wp-content/uploads/2025/01/pexels-photo-8627419.jpeg');
+      background-size: cover; background-position: center;
+    }
+    .hero__body {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 140px 24px 80px;
+    }
+    .hero__inner { max-width: 860px; width: 100%; }
+    .hero__eyebrow { font-size: 16px; font-weight: 400; color: rgba(255,255,255,.85); margin-bottom: 16px; }
+    .hero__title   { font-size: 56px; font-weight: 700; color: #fff; line-height: 1.15; margin-bottom: 24px; }
+    .hero__desc    { font-size: 16px; color: rgba(255,255,255,.9); max-width: 680px; margin: 0 auto 36px; }
+
+    /* ══════════════════════════════════════════
+       2. PROGRAMI
+    ══════════════════════════════════════════ */
+    .programs { padding: 90px 40px; max-width: var(--max); margin: 0 auto; }
+    .programs__header { text-align: center; margin-bottom: 52px; }
+    .programs__header h2 { font-size: 36px; font-weight: 700; color: var(--heading); line-height: 1.2; margin-top: 14px; }
+
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; }
+    .card__img   { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 14px; margin-bottom: 22px; }
+    .card__title { font-size: 22px; font-weight: 700; color: var(--heading); text-align: center; margin-bottom: 10px; }
+    .card__desc  { font-size: 16px; color: var(--muted); text-align: center; margin-bottom: 18px; line-height: 1.6; }
+    .card__link  {
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      font-size: 16px; font-weight: 700; color: var(--heading); transition: color .2s;
+    }
+    .card__link .arr { color: var(--blue); font-size: 18px; }
+    .card__link:hover { color: var(--blue); }
+
+    /* ══════════════════════════════════════════
+       3. ZAŠTO ODABRATI NAS
+    ══════════════════════════════════════════ */
+    .why-us { background: var(--light-bg); padding: 90px 40px; }
+    .why-us__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; max-width: var(--max); margin: 0 auto; }
+    .why-us__title { font-size: 36px; font-weight: 700; color: var(--heading); line-height: 1.2; margin: 14px 0 32px; }
+    .checklist { display: flex; flex-direction: column; gap: 18px; margin-bottom: 36px; }
+    .checklist li { display: flex; align-items: center; gap: 14px; font-size: 16px; font-weight: 600; color: var(--heading); }
+    .checklist li::before {
+      content: ""; flex-shrink: 0; width: 20px; height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23202628' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-size: contain;
+    }
+    .why-us__photo { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 14px; }
+
+    /* ══════════════════════════════════════════
+       4. TESTIMONIALI
+    ══════════════════════════════════════════ */
+    .testimonials { padding: 90px 40px; background: #fff; }
+    .testimonials__header { text-align: center; margin-bottom: 52px; }
+    .testimonials__header h2 { font-size: 36px; font-weight: 700; color: var(--heading); line-height: 1.2; margin-top: 14px; }
+
+    .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; max-width: var(--max); margin: 0 auto; }
+
+    .testi-card {
+      background: var(--light-bg); border-radius: 16px;
+      padding: 32px 28px; display: flex; flex-direction: column; gap: 16px;
+    }
+    .testi-stars { color: var(--blue); font-size: 18px; letter-spacing: 2px; }
+    .testi-text  { font-size: 16px; color: var(--heading); line-height: 1.7; font-style: italic; flex: 1; }
+    .testi-author { display: flex; align-items: center; gap: 14px; margin-top: 4px; }
+    .testi-avatar {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--blue); color: #fff;
+      display: grid; place-items: center;
+      font-size: 18px; font-weight: 700; flex-shrink: 0;
+    }
+    .testi-name { font-size: 15px; font-weight: 700; color: var(--heading); }
+    .testi-role { font-size: 13px; color: var(--muted); }
+
+    /* ══════════════════════════════════════════
+       5. KONTAKT + MAPS
+    ══════════════════════════════════════════ */
+    .contact { background: var(--light-bg); padding: 90px 40px; }
+    .contact__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; max-width: var(--max); margin: 0 auto; }
+    .contact__title { font-size: 36px; font-weight: 700; color: var(--heading); line-height: 1.2; margin: 14px 0 8px; }
+    .contact__sub   { font-size: 16px; color: var(--muted); margin-bottom: 32px; }
+
+    .contact-form { display: flex; flex-direction: column; gap: 16px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label { font-size: 14px; font-weight: 600; color: var(--heading); }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      font-family: 'Mulish', sans-serif; font-size: 15px;
+      padding: 13px 16px; border: 1.5px solid #d0dde3; border-radius: 10px;
+      background: #fff; color: var(--heading); outline: none;
+      transition: border-color .2s;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--blue); }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+    .form-group select { appearance: none; cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23777' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 14px center; background-size: 18px;
+    }
+    .form-submit { align-self: flex-start; }
+
+    .contact__map { border-radius: 16px; overflow: hidden; box-shadow: 0 4px 24px rgba(8,32,40,.1); }
+    .contact__map iframe { width: 100%; height: 480px; border: none; display: block; }
+    .contact__map-info { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+    .map-info-item { display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--heading); font-weight: 600; }
+    .map-info-item svg { flex-shrink: 0; color: var(--blue); }
+
+    /* ══════════════════════════════════════════
+       6. CTA BAND
+    ══════════════════════════════════════════ */
+    .cta-band { background: var(--dark); padding: 90px 40px 0; }
+    .cta-card {
+      background: #fff; border-radius: 20px; padding: 80px 40px;
+      text-align: center; max-width: 1120px; margin: 0 auto;
+    }
+    .cta-card__title { font-size: 36px; font-weight: 700; color: var(--heading); margin-bottom: 14px; }
+    .cta-card__sub   { font-size: 16px; color: var(--muted); margin-bottom: 32px; }
+
+    /* ══════════════════════════════════════════
+       7. FOOTER
+    ══════════════════════════════════════════ */
+    .footer { background: var(--dark); padding: 72px 40px 0; }
+    .footer__grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 60px; max-width: var(--max); margin: 0 auto; padding-bottom: 60px; }
+    .footer h3 { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 18px; }
+    .footer p, .footer li { font-size: 16px; color: rgba(255,255,255,.7); line-height: 1.7; }
+    .footer li { margin-bottom: 8px; }
+    .footer a  { color: rgba(255,255,255,.7); transition: color .2s; }
+    .footer a:hover, .footer a.active { color: var(--blue); }
+
+    .footer__bottom { background: var(--dark); border-top: 1px solid rgba(255,255,255,.08); padding: 22px 40px; text-align: center; }
+    .footer__copy { font-size: 14px; color: rgba(255,255,255,.38); }
+
+    /* Back to top */
+    .back-top {
+      position: fixed; bottom: 24px; right: 24px;
+      width: 40px; height: 40px; background: var(--blue); color: #fff;
+      display: grid; place-items: center; border-radius: 4px;
+      font-size: 18px; z-index: 999; transition: opacity .2s;
+      box-shadow: 0 4px 12px rgba(0,174,239,.4);
+    }
+    .back-top:hover { opacity: .8; }
+
+    /* ══════════════════════════════════════════
+       TABLET ≤ 900px
+    ══════════════════════════════════════════ */
+    @media (max-width: 900px) {
+      .nav { padding: 18px 20px; }
+      .nav__links, .nav__cta { display: none; }
+      .nav__hamburger { display: flex; }
+
+      .mobile-menu { display: flex; }
+
+      .hero__body  { padding: 120px 20px 60px; }
+      .hero__title { font-size: 40px; }
+
+      .programs    { padding: 64px 20px; }
+      .cards       { grid-template-columns: 1fr; gap: 40px; }
+
+      .why-us { padding: 64px 20px; }
+      .why-us__grid { grid-template-columns: 1fr; gap: 36px; }
+      .why-us__grid > div:last-child { order: 2; }
+      .why-us__photo { aspect-ratio: 16/9; }
+
+      .testimonials { padding: 64px 20px; }
+      .testi-grid { grid-template-columns: 1fr; gap: 20px; }
+
+      .contact { padding: 64px 20px; }
+      .contact__grid { grid-template-columns: 1fr; gap: 40px; }
+      .contact__map iframe { height: 320px; }
+
+      .cta-band { padding: 64px 20px 0; }
+      .cta-card { padding: 56px 28px; }
+
+      .footer { padding: 56px 20px 0; }
+      .footer__grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+      .footer__bottom { padding: 20px; }
+    }
+
+    /* ══════════════════════════════════════════
+       MOBILE ≤ 480px
+    ══════════════════════════════════════════ */
+    @media (max-width: 480px) {
+      .nav { padding: 14px 16px; }
+      .nav__logo { font-size: 14px; max-width: 180px; line-height: 1.3; }
+
+      .hero__body  { padding: 100px 16px 52px; }
+      .hero__title { font-size: 30px; line-height: 1.2; }
+      .hero__eyebrow { font-size: 14px; }
+      .hero__desc  { font-size: 14px; margin-bottom: 28px; }
+      .hero .btn-primary { width: 100%; text-align: center; }
+
+      .programs { padding: 52px 16px; }
+      .programs__header h2 { font-size: 26px; }
+      .eyebrow { font-size: 15px; }
+
+      .why-us { padding: 52px 16px; }
+      .why-us__title { font-size: 26px; }
+      .why-us .btn-primary { width: 100%; text-align: center; }
+
+      .testimonials { padding: 52px 16px; }
+      .testimonials__header h2 { font-size: 26px; }
+      .testi-card { padding: 24px 20px; }
+
+      .contact { padding: 52px 16px; }
+      .contact__title { font-size: 26px; }
+      .form-row { grid-template-columns: 1fr; }
+      .form-submit { width: 100%; }
+      .form-submit .btn { width: 100%; text-align: center; }
+
+      .cta-band { padding: 48px 16px 0; }
+      .cta-card { padding: 44px 20px; border-radius: 14px; }
+      .cta-card__title { font-size: 24px; }
+      .cta-card .btn-primary { width: 100%; text-align: center; }
+
+      .footer { padding: 48px 16px 0; }
+      .footer__grid { grid-template-columns: 1fr; gap: 28px; padding-bottom: 36px; }
+      .footer__bottom { padding: 18px 16px; }
+
+      .back-top { bottom: 16px; right: 16px; width: 36px; height: 36px; font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════
+     MOBILE MENU
+══════════════════════════════════ -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#home"     onclick="closeMenu()">Početna</a>
+  <a href="#programi" onclick="closeMenu()">Programi</a>
+  <a href="#zasto"    onclick="closeMenu()">O nama</a>
+  <a href="#recenzije" onclick="closeMenu()">Recenzije</a>
+  <a href="#kontakt"  onclick="closeMenu()">Kontakt</a>
+  <a href="tel:00385995907887" class="btn btn-primary" onclick="closeMenu()">Prijavite se sada</a>
+</div>
+
+<!-- ══════════════════════════════════
+     1. HERO
+══════════════════════════════════ -->
+<header class="hero" id="home">
+  <div class="site-header" id="siteHeader">
+    <nav class="nav">
+      <a href="#home" class="nav__logo">Obertauern - Škola skijanja</a>
+      <ul class="nav__links">
+        <li><a href="#home">Početna</a></li>
+        <li><a href="#programi">Programi</a></li>
+        <li><a href="#zasto">O nama</a></li>
+        <li><a href="#kontakt-forma">Kontakt</a></li>
+      </ul>
+      <a href="tel:00385995907887" class="btn btn-outline-white nav__cta">Prijavite se sada</a>
+      <button class="nav__hamburger" id="hamburger" aria-label="Otvori izbornik">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </div>
+
+  <div class="hero__body">
+    <div class="hero__inner">
+      <p class="hero__eyebrow">Započnite svoju skijašku avanturu</p>
+      <h1 class="hero__title">Škola skijanja u<br>Obertauernu</h1>
+      <p class="hero__desc">Pridružite se našim stručnim instruktorima i uživajte u nezaboravnom skijanju. Nudimo tečajeve za sve razine vještina, od početnika do iskusnih skijaša.</p>
+      <a href="#kontakt-forma" class="btn btn-primary">Prijavite se sada</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ══════════════════════════════════
+     2. PROGRAMI
+══════════════════════════════════ -->
+<section id="programi">
+  <div class="programs">
+    <div class="programs__header" data-anim>
+      <p class="eyebrow">Izaberite svoj program</p>
+      <h2>Različiti programi za vas</h2>
+    </div>
+    <div class="cards">
+
+      <article data-anim="delay-1">
+        <img class="card__img"
+          src="https://obertauern.com.hr/wp-content/uploads/2025/01/pexels-photo-8627419-1024x682.jpeg"
+          alt="Grupni tečaj skijanja" />
+        <h3 class="card__title">Grupni tečaj</h3>
+        <p class="card__desc">U grupnim tečajevima učite u društvu drugih skijaša, uz vodstvo stručnih instruktora.</p>
+        <a href="tel:00385995907887" class="card__link">Kontaktirajte nas <span class="arr">›</span></a>
+      </article>
+
+      <article data-anim="delay-2">
+        <img class="card__img"
+          src="https://obertauern.com.hr/wp-content/uploads/2025/01/pexels-photo-15324802.jpeg"
+          alt="Privatni sati skijanja" />
+        <h3 class="card__title">Privatni sati</h3>
+        <p class="card__desc">Osigurajte personalizirani pristup s privatnim instruktorom koji će se posvetiti samo vama.</p>
+        <a href="tel:00385995907887" class="card__link">Kontaktirajte nas <span class="arr">›</span></a>
+      </article>
+
+      <article data-anim="delay-3">
+        <img class="card__img"
+          src="https://obertauern.com.hr/wp-content/uploads/2025/01/pexels-photo-16096003-683x1024.jpeg"
+          alt="VIP skijaški program" />
+        <h3 class="card__title">VIP</h3>
+        <p class="card__desc">Uživajte cijeli dan sa svojim osobnim učiteljem skijanja i unaprijedite svoje vještine.</p>
+        <a href="tel:00385995907887" class="card__link">Kontaktirajte nas <span class="arr">›</span></a>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     3. ZAŠTO ODABRATI NAS
+══════════════════════════════════ -->
+<section class="why-us" id="zasto">
+  <div class="why-us__grid">
+    <div data-anim>
+      <p class="eyebrow">Zašto odabrati nas?</p>
+      <h2 class="why-us__title">Naša prednost je u osobnom pristupu i kvalitetnom učenju skijanja.</h2>
+      <ul class="checklist">
+        <li>Iskusni instruktori</li>
+        <li>Pristupačne cijene</li>
+        <li>Fleksibilni raspored</li>
+        <li>Zadovoljstvo naših klijenata</li>
+      </ul>
+      <a href="tel:00385995907887" class="btn btn-primary">Nazovite nas</a>
+    </div>
+    <div data-anim="delay-1">
+      <img class="why-us__photo"
+        src="https://obertauern.com.hr/wp-content/uploads/2025/01/Untitled-design-32-1024x1024.png"
+        alt="Skijašica u Obertauernu" />
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     4. TESTIMONIALI
+══════════════════════════════════ -->
+<section class="testimonials" id="recenzije">
+  <div class="testimonials__header container" data-anim>
+    <p class="eyebrow">Što kažu naši polaznici</p>
+    <h2>Recenzije zadovoljnih skijaša</h2>
+  </div>
+
+  <div class="testi-grid container">
+
+    <div class="testi-card" data-anim="delay-1">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Fantastično iskustvo! Instruktor je bio strpljiv i profesionalan. Za tjedan dana sam naučila skijati od nule. Preporučujem svima!"</p>
+      <div class="testi-author">
+        <div class="testi-avatar">A</div>
+        <div>
+          <div class="testi-name">Ana Kovačević</div>
+          <div class="testi-role">Privatni sati · Zagreb</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi-card" data-anim="delay-2">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Doveli smo djecu na grupni tečaj i bili smo oduševljeni. Djeca su obožavala instruktore, a mi smo imali miran odmor. Definitivno dolazimo opet!"</p>
+      <div class="testi-author">
+        <div class="testi-avatar">M</div>
+        <div>
+          <div class="testi-name">Marko Horvat</div>
+          <div class="testi-role">Grupni tečaj · Split</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi-card" data-anim="delay-3">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"VIP paket je bio vrijedan svake kune. Cijeli dan s osobnim instruktorom, savršeno prilagođen mome tempu. Unaprijedio sam tehniku za 100%."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">T</div>
+        <div>
+          <div class="testi-name">Tomislav Jurić</div>
+          <div class="testi-role">VIP program · Rijeka</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     5. KONTAKT + MAPS
+══════════════════════════════════ -->
+<section class="contact" id="kontakt-forma">
+  <div class="contact__grid">
+
+    <div data-anim>
+      <p class="eyebrow">Stupite u kontakt</p>
+      <h2 class="contact__title">Rezervirajte svoj tečaj skijanja</h2>
+      <p class="contact__sub">Ispunite obrazac i javit ćemo vam se u roku od 24 sata.</p>
+
+      <form class="contact-form" action="mailto:ivorbenko0@gmail.com" method="GET">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="ime">Ime</label>
+            <input type="text" id="ime" name="ime" placeholder="Vaše ime" required />
+          </div>
+          <div class="form-group">
+            <label for="prezime">Prezime</label>
+            <input type="text" id="prezime" name="prezime" placeholder="Vaše prezime" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">Email adresa</label>
+          <input type="email" id="email" name="email" placeholder="vas@email.com" required />
+        </div>
+        <div class="form-group">
+          <label for="tel">Broj telefona</label>
+          <input type="tel" id="tel" name="tel" placeholder="+385 ..." />
+        </div>
+        <div class="form-group">
+          <label for="program">Program</label>
+          <select id="program" name="program">
+            <option value="">Odaberite program</option>
+            <option>Grupni tečaj</option>
+            <option>Privatni sati</option>
+            <option>VIP</option>
+            <option>Tečajevi za djecu</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="poruka">Poruka</label>
+          <textarea id="poruka" name="poruka" placeholder="Napišite nam nešto..."></textarea>
+        </div>
+        <div class="form-submit">
+          <button type="submit" class="btn btn-primary">Pošaljite upit</button>
+        </div>
+      </form>
+    </div>
+
+    <div data-anim="delay-1">
+      <div class="contact__map">
+        <iframe
+          src="https://maps.google.com/maps?q=Obertauern,Austria&output=embed&z=13"
+          allowfullscreen loading="lazy"
+          title="Lokacija Obertauern, Austrija">
+        </iframe>
+      </div>
+      <div class="contact__map-info">
+        <div class="map-info-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Obertauern 100, 5562 Obertauern, Austrija
+        </div>
+        <div class="map-info-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <a href="tel:00385995907887" style="color:var(--heading)">+385 99 590 7887</a>
+        </div>
+        <div class="map-info-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <a href="mailto:ivorbenko0@gmail.com" style="color:var(--heading)">ivorbenko0@gmail.com</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     6. CTA BAND
+══════════════════════════════════ -->
+<section class="cta-band" id="kontakt">
+  <div class="cta-card" data-anim>
+    <h2 class="cta-card__title">Pripremite se za skijanje ove zime!</h2>
+    <p class="cta-card__sub">Kontaktirajte nas i rezervirajte svoj tečaj skijanja sada.</p>
+    <a href="tel:00385995907887" class="btn btn-primary">Nazovite nas</a>
+  </div>
+</section>
+
+</main>
+
+<!-- ══════════════════════════════════
+     7. FOOTER
+══════════════════════════════════ -->
+<footer class="footer">
+  <div class="footer__grid">
+    <div>
+      <h3>O nama</h3>
+      <p>Obertauern - Škola skijanja nudi vrhunske tečajeve skijanja za sve uzraste i razine.</p>
+    </div>
+    <div>
+      <h3>Izbornik</h3>
+      <ul>
+        <li><a href="#home" class="active">Početna</a></li>
+        <li><a href="#programi">Programi</a></li>
+        <li><a href="#recenzije">Recenzije</a></li>
+        <li><a href="#kontakt-forma">Kontakt</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Usluge</h3>
+      <ul>
+        <li>Grupni tečaj</li>
+        <li>Privatni sati</li>
+        <li>VIP</li>
+        <li>Tečajevi za djecu</li>
+      </ul>
+    </div>
+  </div>
+</footer>
+<div class="footer__bottom">
+  <p class="footer__copy">Autorska prava © 2026 Obertauern – Škola skijanja</p>
+</div>
+
+<a href="#home" class="back-top" aria-label="Natrag na vrh">↑</a>
+
+<script>
+  /* ── Sticky header ─────────────────────────────── */
+  const header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  /* ── Hamburger menu ────────────────────────────── */
+  const hamburger   = document.getElementById('hamburger');
+  const mobileMenu  = document.getElementById('mobileMenu');
+
+  hamburger.addEventListener('click', () => {
+    const open = hamburger.classList.toggle('is-open');
+    mobileMenu.classList.toggle('is-open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+
+  function closeMenu() {
+    hamburger.classList.remove('is-open');
+    mobileMenu.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+
+  /* ── Scroll animations ─────────────────────────── */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('[data-anim]').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
