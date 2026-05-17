@@ -536,7 +536,11 @@
       <h2 class="contact__title">Rezervirajte svoj tečaj skijanja</h2>
       <p class="contact__sub">Ispunite obrazac i javit ćemo vam se u roku od 24 sata.</p>
 
-      <form class="contact-form" action="mailto:ivorbenko0@gmail.com" method="GET">
+      <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="df905e3f-bbac-4406-a272-d46f27a791ca" />
+        <input type="hidden" name="subject" value="Nova prijava – Obertauern Škola skijanja" />
+        <input type="hidden" name="from_name" value="Obertauern Škola skijanja" />
+        <input type="hidden" name="redirect" value="https://benkoivor96.github.io/oberski/?hvala=1" />
         <div class="form-row">
           <div class="form-group">
             <label for="ime">Ime</label>
@@ -571,6 +575,9 @@
         </div>
         <div class="form-submit">
           <button type="submit" class="btn btn-primary">Pošaljite upit</button>
+        </div>
+        <div id="form-success" style="display:none; margin-top:16px; padding:16px 20px; background:#e6f9f0; border-radius:10px; color:#1a7a4a; font-weight:600;">
+          ✓ Hvala! Vaša poruka je poslana. Javit ćemo vam se uskoro.
         </div>
       </form>
     </div>
@@ -684,6 +691,32 @@
   }, { threshold: 0.12 });
 
   document.querySelectorAll('[data-anim]').forEach(el => observer.observe(el));
+
+  /* ── Web3Forms submit ───────────────────────────── */
+  const contactForm = document.querySelector('.contact-form');
+  const formSuccess = document.getElementById('form-success');
+
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = contactForm.querySelector('button[type="submit"]');
+    btn.textContent = 'Šaljem...';
+    btn.disabled = true;
+
+    const data = new FormData(contactForm);
+    const res  = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: data });
+    const json = await res.json();
+
+    if (json.success) {
+      contactForm.reset();
+      formSuccess.style.display = 'block';
+      btn.textContent = 'Pošaljite upit';
+      btn.disabled = false;
+      setTimeout(() => formSuccess.style.display = 'none', 6000);
+    } else {
+      btn.textContent = 'Greška – pokušajte ponovo';
+      btn.disabled = false;
+    }
+  });
 </script>
 
 </body>
